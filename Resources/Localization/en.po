@@ -1,0 +1,2 @@
+msgid "chat"
+msgstr "tieng anh"
