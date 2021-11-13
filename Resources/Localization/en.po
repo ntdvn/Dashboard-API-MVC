@@ -1,2 +1,2 @@
-msgid "chat"
-msgstr "tieng anh"
+msgid "login_failed"
+msgstr "Login failed"

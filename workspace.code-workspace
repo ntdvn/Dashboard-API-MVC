@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "../../../../Downloads/AdminLTE-3.2.0-rc"
+	},
+	{
+		"path": "../../Backend/fs_auth"
+	}
+]
+}

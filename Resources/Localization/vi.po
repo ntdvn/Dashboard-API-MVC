@@ -1,2 +1,2 @@
-msgid "chat"
-msgstr "tieng viet"
+msgid "login_failed"
+msgstr "Đăng nhập thất bại"

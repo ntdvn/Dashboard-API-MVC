@@ -1,0 +1,28 @@
+@{
+    Layout = "_Layout";
+}
+
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__wobble" src="~/admin_lte/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
+                width="60">
+        </div>
+        <partial name="_NavBar" />
+        <partial name="_SideBar" />
+
+
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+
+
+        @* <!-- AdminLTE for demo purposes -->
+            <script src="~/admin_lte/dist/js/demo.js"></script>
+            <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+            <script src="~/admin_lte/dist/js/pages/dashboard2.js"></script> *@
+    </div>
+</body>

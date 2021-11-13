@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using DashboardMVC.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,9 +19,11 @@ namespace DashboardMVC
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this._configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -39,7 +43,7 @@ namespace DashboardMVC
                     new CultureInfo("es")
                 };
 
-                options.DefaultRequestCulture = new RequestCulture("vi");
+                options.DefaultRequestCulture = new RequestCulture("en");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
 
@@ -53,7 +57,18 @@ namespace DashboardMVC
     }));
             });
             services.AddControllersWithViews();
-            services.AddControllers();
+
+
+            //config APO
+            services.AddApplicationServices(_configuration);
+            services.AddIdentityServices(_configuration);
+            services
+                .AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +92,8 @@ namespace DashboardMVC
             app.UseRequestLocalization();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
