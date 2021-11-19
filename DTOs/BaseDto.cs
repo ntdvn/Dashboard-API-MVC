@@ -4,6 +4,6 @@ namespace DashboardMVC.DTOs
     {
         public bool Status { get; set; } = false;
         public object Data { get; set; }
-        public string[] Message { get; set; } = new string[] { };
+        public string[] Messages { get; set; } = new string[] { };
     }
 }

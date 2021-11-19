@@ -80,3 +80,7 @@
 /Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
 /Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/System.Diagnostics.DiagnosticSource.dll
 /Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Microsoft.OpenApi.dll
+/Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Swashbuckle.AspNetCore.SwaggerUI.dll

@@ -33,6 +33,7 @@ namespace DashboardMVC
                 var logger = services.GetRequiredService<ILogger>();
                 logger.LogError(ex, "An Error occured during migration");
             }
+
             await host.RunAsync();
         }
 
@@ -42,5 +43,6 @@ namespace DashboardMVC
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

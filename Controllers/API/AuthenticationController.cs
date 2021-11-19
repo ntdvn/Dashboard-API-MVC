@@ -40,7 +40,7 @@ namespace DashboardMVC.Controllers.API
                     return BadRequest(new BaseDto
                     {
                         Status = false,
-                        Message = new string[] { "User is exist" },
+                        Messages = new string[] { _localizer["register_failed_user"] },
                     });
                 }
                 var user = _mapper.Map<ApplicationUser>(registerDto);
@@ -49,7 +49,7 @@ namespace DashboardMVC.Controllers.API
                 if (!result.Succeeded) return BadRequest(new BaseDto
                 {
                     Status = false,
-                    Message = new string[] { result.Errors.ToString() }
+                    Messages = new string[] { result.Errors.ToString() }
                 });
 
                 return Ok(new BaseDto
@@ -57,10 +57,8 @@ namespace DashboardMVC.Controllers.API
                     Status = true,
                     Data = new UserDto
                     {
-                        FirstName = user.UserName,
-                        LastName = user.LastName,
+                        FullName = user.FullName,
                         Token = await _tokenService.BuildToken(user),
-                        Gender = user.Gender
                     },
                 });
             }
@@ -70,7 +68,7 @@ namespace DashboardMVC.Controllers.API
                 return BadRequest(new BaseDto
                 {
                     Status = false,
-                    Message = error.ToArray()
+                    Messages = error.ToArray()
                 });
             }
         }
@@ -82,31 +80,30 @@ namespace DashboardMVC.Controllers.API
                 var user = await _userManager.Users.SingleOrDefaultAsync(u => u.UserName == loginDto.Username.ToLower());
                 if (user == null)
                 {
-                    return BadRequest(new BaseDto
+                    return NotFound(new BaseDto
                     {
                         Status = false,
-                        Message = new string[] { "User isn't exist" },
+                        Messages = new string[] { _localizer["login_failed_user"] },
                     });
                 }
                 else
                 {
                     var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-                    if (!result.Succeeded) return Ok(new BaseDto
+                    if (!result.Succeeded) return BadRequest(new BaseDto
                     {
                         Status = false,
-                        Message = new string[] { _localizer["login_failed"] }
+                        Messages = new string[] { _localizer["login_failed_password"] }
                     });
                     return Ok(new BaseDto
                     {
                         Status = true,
                         Data = new UserDto
                         {
-                            FirstName = user.UserName,
-                            LastName = user.LastName,
+                            FullName = user.FullName,
                             Token = await _tokenService.BuildToken(user),
-                            Gender = user.Gender
                         },
+                        Messages = new string[] { _localizer["login_success"] }
                     });
                 }
             }
@@ -116,7 +113,7 @@ namespace DashboardMVC.Controllers.API
                 return BadRequest(new BaseDto
                 {
                     Status = false,
-                    Message = error.ToArray()
+                    Messages = error.ToArray()
                 });
             }
         }

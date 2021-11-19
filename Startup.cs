@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using DashboardMVC.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace DashboardMVC
 {
@@ -31,44 +25,15 @@ namespace DashboardMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
-            services.AddPortableObjectLocalization(options => options.ResourcesPath = "Resources/Localization");
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new List<CultureInfo>
-                {
-                    new CultureInfo("vi"),
-                    new CultureInfo("en"),
-                    new CultureInfo("es")
-                };
-
-                options.DefaultRequestCulture = new RequestCulture("en");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-
-                options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
-    {
-        //...
-        var userLangs = context.Request.Headers["Accept-Language"].ToString();
-        var firstLang = userLangs.Split(',').FirstOrDefault();
-        var defaultLang = string.IsNullOrEmpty(firstLang) ? "en" : firstLang;
-        return Task.FromResult(new ProviderCultureResult(defaultLang, defaultLang));
-    }));
-            });
-            services.AddControllersWithViews();
-
-
-            //config APO
             services.AddApplicationServices(_configuration);
             services.AddIdentityServices(_configuration);
-            services
-                .AddControllers()
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
-                });
+            services.AddTranslateService(_configuration);
+            services.AddJsonService(_configuration);
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Advantage.API", Version = "v1" });
+            });
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +44,8 @@ namespace DashboardMVC
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Advantage.API v1"));
             }
             else
             {
@@ -86,6 +53,9 @@ namespace DashboardMVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -104,8 +74,6 @@ namespace DashboardMVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             });
-
-
         }
     }
 }
