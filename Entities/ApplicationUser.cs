@@ -9,7 +9,10 @@ namespace DashboardMVC.Entities
         public string FullName { get; set; }
 
         public DateTime Created { get; set; } = DateTime.Now;
-        public ICollection<ApplicationUserRole> UserRoles { get; set; }
+
+        public ICollection<ApplicationUserGroup> UserGroups { get; set; }
+        // public ICollection<ApplicationRoleGroup> RoleGroups { get; set; }
+        
 
     }
 }
