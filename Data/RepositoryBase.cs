@@ -13,12 +13,25 @@ namespace DashboardMVC.Data
         private ApplicationDbContext _dbContext;
         private readonly DbSet<T> _dbSet;
 
-        public RepositoryBase(ApplicationDbContext dbContext, DbSet<T> dbSet)
+        protected IDbFactory DbFactory
         {
-            this._dbContext = dbContext;
-            this._dbSet = _dbContext.Set<T>();
+            get;
+            private set;
+        }
+        protected ApplicationDbContext DbContext
+        {
+            get { return _dbContext ?? (_dbContext = DbFactory.Init()); }
+        }
+        #endregion
+
+
+        protected RepositoryBase(IDbFactory dbFactory)
+        {
+            DbFactory = dbFactory;
+            _dbSet = DbContext.Set<T>();
         }
 
+        #region Implementation
         public T Add(T entity)
         {
             return _dbSet.Add(entity).Entity;

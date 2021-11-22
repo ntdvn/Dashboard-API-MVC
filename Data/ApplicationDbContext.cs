@@ -16,6 +16,10 @@ namespace DashboardMVC.Data
         {
         }
 
+        public ApplicationDbContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUserGroup>().HasKey(e => new

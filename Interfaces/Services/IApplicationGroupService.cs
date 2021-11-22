@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DashboardMVC.Entities;
@@ -18,7 +19,7 @@ namespace DashboardMVC.Interfaces.Services
 
         ApplicationGroup Delete(int id);
 
-        bool AddUserToGroups(IEnumerable<ApplicationGroup> groups, string userId);
+        bool AddUserToGroups(IEnumerable<ApplicationUserGroup> groups, Guid userId);
 
         IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId);
 

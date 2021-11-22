@@ -6,7 +6,7 @@ namespace DashboardMVC.Data
 {
     public class ApplicationRoleGroupRepository : RepositoryBase<ApplicationRoleGroup>, IApplicationRoleGroupRepository
     {
-        public ApplicationRoleGroupRepository(ApplicationDbContext dbContext, DbSet<ApplicationRoleGroup> dbSet) : base(dbContext, dbSet)
+        protected ApplicationRoleGroupRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

@@ -6,7 +6,7 @@ namespace DashboardMVC.Data
 {
     public class ApplicationUserGroupRepository : RepositoryBase<ApplicationUserGroup>, IApplicationUserGroupRepository
     {
-        public ApplicationUserGroupRepository(ApplicationDbContext dbContext, DbSet<ApplicationUserGroup> dbSet) : base(dbContext, dbSet)
+        protected ApplicationUserGroupRepository(IDbFactory dbFactory) : base(dbFactory)
         {
         }
     }

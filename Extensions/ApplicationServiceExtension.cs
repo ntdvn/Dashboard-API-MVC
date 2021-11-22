@@ -1,6 +1,8 @@
 using DashboardMVC.Data;
+using DashboardMVC.Data.Services;
 using DashboardMVC.Helpers;
 using DashboardMVC.Interfaces;
+using DashboardMVC.Interfaces.Services;
 using DashboardMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,10 @@ namespace DashboardMVC.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IDbFactory, DbFactory>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IApplicationGroupService, ApplicationGroupService>();
+            services.AddScoped<IApplicationUserGroupRepository, IApplicationUserGroupRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();
