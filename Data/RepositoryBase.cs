@@ -25,7 +25,7 @@ namespace DashboardMVC.Data
         #endregion
 
 
-        protected RepositoryBase(IDbFactory dbFactory)
+        public RepositoryBase(IDbFactory dbFactory)
         {
             DbFactory = dbFactory;
             _dbSet = DbContext.Set<T>();

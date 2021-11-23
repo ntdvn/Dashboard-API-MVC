@@ -17,6 +17,7 @@ namespace DashboardMVC.Extensions
         {
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
             services.AddPortableObjectLocalization(options => options.ResourcesPath = "Resources/Localization");
+
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new List<CultureInfo>
@@ -38,14 +39,14 @@ namespace DashboardMVC.Extensions
                     var defaultLang = string.IsNullOrEmpty(firstLang) ? "en" : firstLang;
                     return Task.FromResult(new ProviderCultureResult(defaultLang, defaultLang));
                 }));
-            });
-            services
-                .AddMvc()
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource));
-                });
+            }); services
+    .AddMvc()
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(SharedResource));
+    });
+
             return services;
         }
     }

@@ -1,27 +1,36 @@
 using System;
 using DashboardMVC.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DashboardMVC.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, IdentityUserClaim<Guid>, ApplicationUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+    public class ApplicationDbContext
+        : IdentityDbContext<ApplicationUser, ApplicationRole, Guid,
+            ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
+            ApplicationRoleClaim, ApplicationUserToken>
     {
-        public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
-        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
-        public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
-        public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
-        public ApplicationDbContext()
-        {
-        }
+        public DbSet<ApplicationGroup> ApplicationGroups { get; set; }
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
+        public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { get; set; }
+        public DbSet<ApplicationUserGroup> ApplicationUserGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+            builder.Entity<ApplicationRoleClaim>().ToTable("ApplicationRoleClaim");
+            builder.Entity<ApplicationUserClaim>().ToTable("ApplicationUserClaim");
+            builder.Entity<ApplicationUserLogin>().ToTable("ApplicationUserLogin");
+            builder.Entity<ApplicationUserRole>().ToTable("ApplicationUserRole");
+            builder.Entity<ApplicationUserToken>().ToTable("ApplicationUserToken");
+            builder.Entity<ApplicationRole>().ToTable("ApplicationRole");
+            builder.Entity<ApplicationUser>().ToTable("ApplicationUser");
+
+
             builder.Entity<ApplicationUserGroup>().HasKey(e => new
             {
                 e.GroupId,
@@ -54,7 +63,7 @@ namespace DashboardMVC.Data
                 .HasForeignKey(e => e.GroupId)
                 .IsRequired();
 
-            base.OnModelCreating(builder);
+
         }
     }
 }

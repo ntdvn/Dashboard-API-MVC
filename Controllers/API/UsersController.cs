@@ -18,9 +18,9 @@ namespace DashboardMVC.Controllers.API
         }
 
         [HttpGet]
-        public async Task<IEnumerable<MemberDto>> get()
+        public IEnumerable<MemberDto> get()
         {
-            return await this._usersRepository.GetUsersAsync();
+            return this._usersRepository.GetUsersAsync();
         }
     }
 }

@@ -17,3 +17,16 @@ msgid "register_required_full_name"
 msgstr "Full name is required"
 msgid "register_failed_user"
 msgstr "User already exists"
+
+
+
+msgid "server_error_401"
+msgstr "401 Unauthorized"
+msgid "server_error_404"
+msgstr "404 Not Found"
+msgid "server_error_405"
+msgstr "405 Method Not Allowed"
+
+
+msgid "exception_duplicated"
+msgstr "Entity already exists!"

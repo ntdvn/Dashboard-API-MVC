@@ -49,7 +49,7 @@ namespace DashboardMVC.Controllers.API
                 if (!result.Succeeded) return BadRequest(new BaseDto
                 {
                     Status = false,
-                    Messages = new string[] { result.Errors.ToString() }
+                    Messages = result.Errors.Select(e => e.Description).ToArray()
                 });
 
                 return Ok(new BaseDto
@@ -57,6 +57,7 @@ namespace DashboardMVC.Controllers.API
                     Status = true,
                     Data = new UserDto
                     {
+                        Username = user.UserName,
                         FullName = user.FullName,
                         Token = await _tokenService.BuildToken(user),
                     },
@@ -100,6 +101,7 @@ namespace DashboardMVC.Controllers.API
                         Status = true,
                         Data = new UserDto
                         {
+                            Username = user.UserName,
                             FullName = user.FullName,
                             Token = await _tokenService.BuildToken(user),
                         },

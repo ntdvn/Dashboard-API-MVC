@@ -4,22 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeduShop.Common.Exceptions
+namespace DashboardMVC.Common.Exceptions
 {
-    public class NameDuplicatedException : Exception
+    public class DuplicatedException : Exception
     {
-        public NameDuplicatedException()
+
+        public string EntityName { get; }
+        public DuplicatedException()
         {
         }
 
-        public NameDuplicatedException(string message)
+        public DuplicatedException(string message)
         : base(message)
         {
+
         }
 
-        public NameDuplicatedException(string message, Exception inner)
+        public DuplicatedException(string message, Exception inner)
         : base(message, inner)
         {
+        }
+
+        public DuplicatedException(string message, string entityName)
+        : this(message)
+        {
+            EntityName = entityName;
         }
     }
 }

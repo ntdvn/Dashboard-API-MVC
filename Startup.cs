@@ -1,3 +1,4 @@
+using DashboardMVC.Common.Middlewares;
 using DashboardMVC.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -25,10 +26,13 @@ namespace DashboardMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddApplicationServices(_configuration);
             services.AddIdentityServices(_configuration);
-            services.AddTranslateService(_configuration);
             services.AddJsonService(_configuration);
+            services.AddTranslateService(_configuration);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Advantage.API", Version = "v1" });
@@ -39,8 +43,6 @@ namespace DashboardMVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,9 +61,12 @@ namespace DashboardMVC
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRequestLocalization();
 
+
+            app.UseRequestLocalization();
+            app.UseMiddleware<ResponseMessageMiddleware>();
             app.UseRouting();
+
 
             app.UseAuthentication();
 
@@ -74,6 +79,8 @@ namespace DashboardMVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }

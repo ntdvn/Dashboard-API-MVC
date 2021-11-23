@@ -16,10 +16,18 @@ namespace DashboardMVC.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+
             services.AddScoped<IDbFactory, DbFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IApplicationGroupRepository, ApplicationGroupRepository>();
             services.AddScoped<IApplicationGroupService, ApplicationGroupService>();
-            services.AddScoped<IApplicationUserGroupRepository, IApplicationUserGroupRepository>();
+
+            services.AddScoped<IApplicationUserGroupRepository, ApplicationUserGroupRepository>();
+
+            services.AddScoped<IApplicationRoleService, ApplicationRoleService>();
+            services.AddScoped<IApplicationRoleRepository, ApplicationRoleRepository>();
+
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenService, TokenService>();

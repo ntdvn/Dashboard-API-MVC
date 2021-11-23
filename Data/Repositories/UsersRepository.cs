@@ -18,7 +18,7 @@ namespace DashboardMVC.Data
             this._applicationDbContext = applicationDbContext;
         }
 
-        public async Task<IEnumerable<MemberDto>> GetUsersAsync()
+        public  IEnumerable<MemberDto> GetUsersAsync()
         {
             var users = _applicationDbContext.Users.ToList();
             return _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<MemberDto>>(users);

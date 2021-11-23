@@ -6,6 +6,6 @@ namespace DashboardMVC.Helpers
 {
     public interface IUsersRepository
     {
-        Task<IEnumerable<MemberDto>> GetUsersAsync();
+        IEnumerable<MemberDto> GetUsersAsync();
     }
 }

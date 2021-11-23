@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DashboardMVC.Common.Exceptions;
 using DashboardMVC.Entities;
+using DashboardMVC.Helpers;
 using DashboardMVC.Interfaces;
 using DashboardMVC.Interfaces.Services;
-using TeduShop.Common.Exceptions;
+using Microsoft.Extensions.Localization;
 
 namespace DashboardMVC.Data.Services
 {
@@ -13,10 +15,12 @@ namespace DashboardMVC.Data.Services
         private IApplicationGroupRepository _appGroupRepository;
         private IUnitOfWork _unitOfWork;
         private IApplicationUserGroupRepository _appUserGroupRepository;
+        private IStringLocalizer<SharedResource> _localizer;
         public ApplicationGroupService(IUnitOfWork unitOfWork,
            IApplicationUserGroupRepository appUserGroupRepository,
-           IApplicationGroupRepository appGroupRepository)
+           IApplicationGroupRepository appGroupRepository, IStringLocalizer<SharedResource> localizer)
         {
+            this._localizer = localizer;
             this._appGroupRepository = appGroupRepository;
             this._appUserGroupRepository = appUserGroupRepository;
             this._unitOfWork = unitOfWork;
@@ -25,7 +29,7 @@ namespace DashboardMVC.Data.Services
         {
             if (_appGroupRepository.CheckContains(x => x.Name == applicationGroup.Name))
             {
-                throw new NameDuplicatedException("Tên không được trùng");
+                throw new DuplicatedException(_localizer["exception_duplicated", applicationGroup.Name]);
             }
             else
             {
@@ -82,13 +86,13 @@ namespace DashboardMVC.Data.Services
 
         public void Save()
         {
-           _unitOfWork.Commit();
+            _unitOfWork.Commit();
         }
 
         public void Update(ApplicationGroup applicationGroup)
         {
-             if (_appGroupRepository.CheckContains(x => x.Name == applicationGroup.Name && x.Id != applicationGroup.Id))
-                throw new NameDuplicatedException("Tên không được trùng");
+            if (_appGroupRepository.CheckContains(x => x.Name == applicationGroup.Name && x.Id != applicationGroup.Id))
+                throw new DuplicatedException("Tên không được trùng");
             _appGroupRepository.Update(applicationGroup);
         }
     }

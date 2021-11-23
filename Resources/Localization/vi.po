@@ -17,3 +17,14 @@ msgid "register_required_full_name"
 msgstr "Tên người dùng là bắt buộc"
 msgid "register_failed_user"
 msgstr "Người dùng đã tồn tại"
+
+msgid "server_error_401"
+msgstr "401 Không có quyền truy cập"
+msgid "server_error_404"
+msgstr "404 Không tìm thấy tài nguyên"
+msgid "server_error_405"
+msgstr "405 Phương thức không được hỗ trợ"
+
+
+msgid "exception_duplicated"
+msgstr "Đối tượng đã tồn tại!"
