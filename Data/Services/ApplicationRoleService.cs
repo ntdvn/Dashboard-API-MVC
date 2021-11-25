@@ -13,14 +13,19 @@ namespace DashboardMVC.Data.Services
     public class ApplicationRoleService : IApplicationRoleService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IApplicationRoleGroupRepository _applicationRoleGroupRepository;
         private readonly IApplicationRoleRepository _appRoleRepository;
         private readonly IStringLocalizer<SharedResource> _localizer;
 
+
         public ApplicationRoleService(IUnitOfWork unitOfWork,
-            IApplicationRoleRepository appRoleRepository, IStringLocalizer<SharedResource> localizer)
+            IApplicationRoleRepository appRoleRepository, IApplicationRoleGroupRepository applicationRoleGroupRepository, IStringLocalizer<SharedResource> localizer)
         {
+
             this._localizer = localizer;
+            this._applicationRoleGroupRepository = applicationRoleGroupRepository;
             this._appRoleRepository = appRoleRepository;
+
             this._unitOfWork = unitOfWork;
         }
 
@@ -39,11 +44,11 @@ namespace DashboardMVC.Data.Services
 
         public bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, Guid groupId)
         {
-            // _appRoleGroupRepository.DeleteMulti(x => x.GroupId == groupId);
-            // foreach (var roleGroup in roleGroups)
-            // {
-            //     _appRoleGroupRepository.Add(roleGroup);
-            // }
+            _applicationRoleGroupRepository.DeleteMulti(x => x.GroupId == groupId);
+            foreach (var roleGroup in roleGroups)
+            {
+                _applicationRoleGroupRepository.Add(roleGroup);
+            }
             return true;
         }
 

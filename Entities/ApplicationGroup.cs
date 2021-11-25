@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace DashboardMVC.Entities
 {
@@ -14,5 +15,7 @@ namespace DashboardMVC.Entities
         public string Name { get; set; }
         [StringLength(250)]
         public string Description { get; set; }
+
+        public virtual IEnumerable<ApplicationRoleGroup> RoleGroups { get; set; }
     }
 }

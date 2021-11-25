@@ -5,11 +5,13 @@ using AutoMapper;
 using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 using DashboardMVC.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DashboardMVC.Controllers.API
 {
+    [Authorize]
     [Route("api/application_groups")]
     public class ApplicationGroupController : BaseApiController
 
@@ -50,6 +52,7 @@ namespace DashboardMVC.Controllers.API
                             RoleId = role.Id
                         });
                     }
+                    
                     _applicationRoleService.AddRolesToGroup(listRoleGroup, appGroup.Id);
                     _applicationRoleService.Save();
 
@@ -84,7 +87,7 @@ namespace DashboardMVC.Controllers.API
             // return Ok(new BaseDto
             // {
             //     Status = true,
-            //     Data = applicationGroupDto
+            //     Data = applicationGroupDto.Roles
             // });
 
         }

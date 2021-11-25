@@ -84,3 +84,4 @@
 /Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/tiendatnguyen/Documents/dotNetWorkspace/Dashboard/DashboardMVC/bin/Debug/net5.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll

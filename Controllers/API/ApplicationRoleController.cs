@@ -7,9 +7,11 @@ using DashboardMVC.Entities;
 using DashboardMVC.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DashboardMVC.Controllers.API
 {
+    [Authorize]
     [Route("api/roles")]
     public class ApplicationRoleController : BaseApiController
     {

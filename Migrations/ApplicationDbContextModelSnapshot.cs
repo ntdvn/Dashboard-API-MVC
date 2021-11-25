@@ -97,11 +97,13 @@ namespace DashboardMVC.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("GroupId", "RoleId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("ApplicationRoleGroups");
                 });
@@ -211,6 +213,8 @@ namespace DashboardMVC.Migrations
 
                     b.HasKey("GroupId", "UserId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("ApplicationUserGroups");
                 });
 
@@ -298,7 +302,7 @@ namespace DashboardMVC.Migrations
 
                     b.HasOne("DashboardMVC.Entities.ApplicationRole", "Role")
                         .WithMany("RoleGroups")
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -326,7 +330,7 @@ namespace DashboardMVC.Migrations
 
                     b.HasOne("DashboardMVC.Entities.ApplicationUser", "User")
                         .WithMany("UserGroups")
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

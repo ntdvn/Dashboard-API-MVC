@@ -21,15 +21,17 @@ namespace DashboardMVC.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IApplicationGroupRepository, ApplicationGroupRepository>();
-            services.AddScoped<IApplicationGroupService, ApplicationGroupService>();
-
             services.AddScoped<IApplicationUserGroupRepository, ApplicationUserGroupRepository>();
-
-            services.AddScoped<IApplicationRoleService, ApplicationRoleService>();
+            services.AddScoped<IApplicationRoleGroupRepository, ApplicationRoleGroupRepository>();
             services.AddScoped<IApplicationRoleRepository, ApplicationRoleRepository>();
 
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IApplicationGroupService, ApplicationGroupService>();
+
+            services.AddScoped<IApplicationRoleService, ApplicationRoleService>();
+
             services.AddScoped<ITokenService, TokenService>();
             services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("DefaultLogger"));
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);

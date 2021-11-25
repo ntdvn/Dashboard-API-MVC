@@ -31,39 +31,41 @@ namespace DashboardMVC.Data
             builder.Entity<ApplicationUser>().ToTable("ApplicationUser");
 
 
-            builder.Entity<ApplicationUserGroup>().HasKey(e => new
-            {
-                e.GroupId,
-                e.UserId
-            });
-            builder.Entity<ApplicationRoleGroup>().HasKey(e => new
-            {
-                e.GroupId,
-                e.RoleId
-            });
-            builder.Entity<ApplicationUser>()
-                .HasMany(ur => ur.UserGroups)
-                .WithOne(u => u.User)
-                .HasForeignKey(e => e.UserId)
-                .IsRequired();
-            builder.Entity<ApplicationUser>()
-                .HasMany(ur => ur.UserGroups)
-                .WithOne(u => u.User)
-                .HasForeignKey(e => e.GroupId)
-                .IsRequired();
+            builder
+                .Entity<ApplicationUserGroup>()
+                .HasKey(e => new
+                {
+                    e.GroupId,
+                    e.UserId
+                });
+            builder
+                .Entity<ApplicationRoleGroup>()
+                .HasKey(e => new
+                {
+                    e.GroupId,
+                    e.RoleId
+                });
+            // builder.Entity<ApplicationUser>()
+            //     .HasMany(ur => ur.UserGroups)
+            //     .WithOne(u => u.User)
+            //     .HasForeignKey(e => e.UserId)
+            //     .IsRequired();
+            // builder.Entity<ApplicationUser>()
+            //     .HasMany(ur => ur.UserGroups)
+            //     .WithOne(u => u.User)
+            //     .HasForeignKey(e => e.GroupId)
+            //     .IsRequired();
 
-            builder.Entity<ApplicationRole>()
-                .HasMany(ur => ur.RoleGroups)
-                .WithOne(u => u.Role)
+            // builder.Entity<ApplicationRole>()
+            //     .HasMany(ur => ur.RoleGroups)
+            //     .WithOne(u => u.Role)
+            //     .HasForeignKey(e => e.RoleId)
+            //     .IsRequired();
+            builder.Entity<ApplicationRoleGroup>()
+                .HasOne(ur => ur.Role)
+                .WithMany(u => u.RoleGroups)
                 .HasForeignKey(e => e.RoleId)
                 .IsRequired();
-            builder.Entity<ApplicationRole>()
-                .HasMany(ur => ur.RoleGroups)
-                .WithOne(u => u.Role)
-                .HasForeignKey(e => e.GroupId)
-                .IsRequired();
-
-
         }
     }
 }

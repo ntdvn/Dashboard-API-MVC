@@ -66,7 +66,7 @@ namespace DashboardMVC.Data.Services
 
         public IEnumerable<ApplicationGroup> GetAll()
         {
-            return _appGroupRepository.GetAll();
+            return _appGroupRepository.GetAll(new string[] { "RoleGroups" });
         }
 
         public ApplicationGroup GetDetail(int id)

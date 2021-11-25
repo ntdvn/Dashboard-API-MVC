@@ -89,7 +89,7 @@ namespace DashboardMVC.Migrations
                 columns: table => new
                 {
                     GroupId = table.Column<Guid>(type: "uuid", nullable: false),
-                    RoleId = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
+                    RoleId = table.Column<Guid>(type: "uuid", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,8 +101,8 @@ namespace DashboardMVC.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationRoleGroups_ApplicationRole_GroupId",
-                        column: x => x.GroupId,
+                        name: "FK_ApplicationRoleGroups_ApplicationRole_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "ApplicationRole",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -146,8 +146,8 @@ namespace DashboardMVC.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserGroups_ApplicationUser_GroupId",
-                        column: x => x.GroupId,
+                        name: "FK_ApplicationUserGroups_ApplicationUser_UserId",
+                        column: x => x.UserId,
                         principalTable: "ApplicationUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -243,6 +243,11 @@ namespace DashboardMVC.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicationRoleGroups_RoleId",
+                table: "ApplicationRoleGroups",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "ApplicationUser",
                 column: "NormalizedEmail");
@@ -256,6 +261,11 @@ namespace DashboardMVC.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUserClaim_UserId",
                 table: "ApplicationUserClaim",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserGroups_UserId",
+                table: "ApplicationUserGroups",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(

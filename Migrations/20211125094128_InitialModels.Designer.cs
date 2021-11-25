@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DashboardMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211123031545_InitialModels")]
+    [Migration("20211125094128_InitialModels")]
     partial class InitialModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,11 +99,13 @@ namespace DashboardMVC.Migrations
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("GroupId", "RoleId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("ApplicationRoleGroups");
                 });
@@ -213,6 +215,8 @@ namespace DashboardMVC.Migrations
 
                     b.HasKey("GroupId", "UserId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("ApplicationUserGroups");
                 });
 
@@ -300,7 +304,7 @@ namespace DashboardMVC.Migrations
 
                     b.HasOne("DashboardMVC.Entities.ApplicationRole", "Role")
                         .WithMany("RoleGroups")
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -328,7 +332,7 @@ namespace DashboardMVC.Migrations
 
                     b.HasOne("DashboardMVC.Entities.ApplicationUser", "User")
                         .WithMany("UserGroups")
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
