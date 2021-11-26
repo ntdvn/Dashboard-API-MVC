@@ -12,12 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace DashboardMVC.Controllers.API
 {
     [Authorize]
-    public class UserController : BaseApiController
+    [Route("user_manager")]
+    public class UserManagerController : BaseApiController
     {
         public UserManager<ApplicationUser> _userManager { get; set; }
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserController(IUserRepository userRepository, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public UserManagerController(IUserRepository userRepository, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             this._mapper = mapper;
             this._userRepository = userRepository;
@@ -33,12 +34,35 @@ namespace DashboardMVC.Controllers.API
         {
 
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(Guid.Parse(userId));
             return Ok(new BaseDto
             {
                 Status = true,
                 Data = user,
             });
+        }
+
+        [HttpGet("profile/{id}")]
+        public async Task<ActionResult<BaseDto>> profileById(Guid id)
+        {
+
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(id);
+            if (user != null)
+            {
+                return Ok(new BaseDto
+                {
+                    Status = true,
+                    Data = user,
+                });
+            }
+            else
+            {
+                return NotFound(new BaseDto
+                {
+                    Status = false
+                });
+            }
         }
     }
 }

@@ -1,7 +1,11 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using DashboardMVC.Common.Exceptions;
+using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 using DashboardMVC.Helpers;
 using DashboardMVC.Interfaces;
@@ -16,10 +20,14 @@ namespace DashboardMVC.Data.Services
         private IUnitOfWork _unitOfWork;
         private IApplicationUserGroupRepository _appUserGroupRepository;
         private IStringLocalizer<SharedResource> _localizer;
+
+        private readonly IMapper _mapper;
+
         public ApplicationGroupService(IUnitOfWork unitOfWork,
            IApplicationUserGroupRepository appUserGroupRepository,
-           IApplicationGroupRepository appGroupRepository, IStringLocalizer<SharedResource> localizer)
+           IApplicationGroupRepository appGroupRepository, IStringLocalizer<SharedResource> localizer, IMapper mapper)
         {
+            this._mapper = mapper;
             this._localizer = localizer;
             this._appGroupRepository = appGroupRepository;
             this._appUserGroupRepository = appUserGroupRepository;
@@ -64,9 +72,9 @@ namespace DashboardMVC.Data.Services
 
         }
 
-        public IEnumerable<ApplicationGroup> GetAll()
+        public IEnumerable<ApplicationGroupDto> GetAll()
         {
-            return _appGroupRepository.GetAll(new string[] { "RoleGroups" });
+            return _mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupDto>>(_appGroupRepository.GetAll());
         }
 
         public ApplicationGroup GetDetail(int id)
@@ -79,9 +87,14 @@ namespace DashboardMVC.Data.Services
             return _appGroupRepository.GetListUserByGroupId(groupId);
         }
 
-        public IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId)
+        public IEnumerable<ApplicationGroupDto> GetListGroupByUserId(string userId)
         {
-            return _appGroupRepository.GetListGroupByUserId(userId);
+            return _mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupDto>>(_appGroupRepository.GetListGroupByUserId(userId));
+        }
+
+        public IEnumerable<ApplicationRoleGroupDto> GetListGroupWithRoles()
+        {
+            return _appGroupRepository.GetListGroupWithRoles();
         }
 
         public void Save()
@@ -95,5 +108,7 @@ namespace DashboardMVC.Data.Services
                 throw new DuplicatedException("Tên không được trùng");
             _appGroupRepository.Update(applicationGroup);
         }
+
+
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 
 namespace DashboardMVC.Interfaces.Services
@@ -22,7 +23,7 @@ namespace DashboardMVC.Interfaces.Services
         bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, Guid groupId);
 
         //Get list role by group id
-        IEnumerable<ApplicationRole> GetListRoleByGroupId(int groupId);
+        IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId);
 
         void Save();
     }

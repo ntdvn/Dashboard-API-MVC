@@ -1,16 +1,19 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 using DashboardMVC.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DashboardMVC.Data
 {
     public class ApplicationGroupRepository : RepositoryBase<ApplicationGroup>, IApplicationGroupRepository
     {
-        public ApplicationGroupRepository(IDbFactory dbFactory) : base(dbFactory)
+        private readonly IApplicationRoleRepository _applicationRoleRepository;
+        public ApplicationGroupRepository(IDbFactory dbFactory, IApplicationRoleRepository applicationRoleRepository) : base(dbFactory)
         {
+            this._applicationRoleRepository = applicationRoleRepository;
         }
 
         public IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId)
@@ -24,6 +27,8 @@ namespace DashboardMVC.Data
             // .Where(x => x.Id == Guid.Parse(userId)).ToList();
         }
 
+
+
         public IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId)
         {
             return DbContext
@@ -33,6 +38,25 @@ namespace DashboardMVC.Data
 
                 });
             // .Where(x => x.Id == groupId);
+        }
+
+        public IEnumerable<ApplicationRoleGroupDto> GetListGroupWithRoles()
+        {
+            var results = new List<ApplicationRoleGroupDto>();
+            var applicationGroups = DbContext.ApplicationGroups.ToList();
+            foreach (var group in applicationGroups)
+            {
+                var roles = _applicationRoleRepository.GetListRoleByGroupId(group.Id);
+                var result = new ApplicationRoleGroupDto
+                {
+                    Id = group.Id,
+                    GroupName = group.Name,
+                    Description = group.Description,
+                    Roles = roles
+                };
+                results.Add(result);
+            }
+            return results;
         }
     }
 }

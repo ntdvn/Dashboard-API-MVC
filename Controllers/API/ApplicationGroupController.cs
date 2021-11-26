@@ -52,7 +52,7 @@ namespace DashboardMVC.Controllers.API
                             RoleId = role.Id
                         });
                     }
-                    
+
                     _applicationRoleService.AddRolesToGroup(listRoleGroup, appGroup.Id);
                     _applicationRoleService.Save();
 
@@ -83,22 +83,26 @@ namespace DashboardMVC.Controllers.API
                     Messages = error.ToArray()
                 });
             }
-
-            // return Ok(new BaseDto
-            // {
-            //     Status = true,
-            //     Data = applicationGroupDto.Roles
-            // });
-
         }
 
         [HttpGet]
-        public ActionResult<BaseDto> GetAll()
+        public ActionResult<BaseDto> Read()
         {
             return Ok(new BaseDto
             {
                 Status = true,
                 Data = _applicationGroupService.GetAll()
+            });
+        }
+
+
+        [HttpGet("detail")]
+        public ActionResult<BaseDto> ReadDetail()
+        {
+            return Ok(new BaseDto
+            {
+                Status = true,
+                Data = _applicationGroupService.GetListGroupWithRoles()
             });
         }
     }

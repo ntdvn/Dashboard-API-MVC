@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 using DashboardMVC.Interfaces;
 
@@ -12,19 +13,34 @@ namespace DashboardMVC.Data
         {
         }
 
-        public IEnumerable<ApplicationRole> GetListRoleByGroupId(int groupId)
+        public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId)
         {
             return DbContext
-                .ApplicationRoles
-                .Join<ApplicationRole, ApplicationRoleGroup, Guid, ApplicationRole>(
+                .ApplicationGroups
+                .Join<ApplicationGroup, ApplicationRoleGroup, Guid, ApplicationRoleGroup>(
                     DbContext.ApplicationRoleGroups,
-                    ar => ar.Id, arg => arg.RoleId,
+                    ar => ar.Id, arg => arg.GroupId,
                     (ArgIterator, arg) =>
-                        new ApplicationRole
+                        new ApplicationRoleGroup
                         {
+                            RoleId = arg.RoleId,
+                            GroupId = arg.GroupId
+                        }
+                )
+                .Where(arg => arg.GroupId == groupId)
+                .Join<ApplicationRoleGroup, ApplicationRole, Guid, ApplicationRoleDto>(
+                    DbContext.ApplicationRoles,
+                    arg => arg.RoleId, ar => ar.Id,
+                    (arg, ar) =>
+                        new ApplicationRoleDto
+                        {
+                            Id = ar.Id,
+                            Name = ar.Name,
+                            Description = ar.Description,
 
                         }
-                );
+                )
+                .ToList();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DashboardMVC.Common.Exceptions;
+using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 using DashboardMVC.Helpers;
 using DashboardMVC.Interfaces;
@@ -77,7 +78,7 @@ namespace DashboardMVC.Data.Services
             return _appRoleRepository.GetSingleByCondition(x => x.Id.CompareTo(id) == 0);
         }
 
-        public IEnumerable<ApplicationRole> GetListRoleByGroupId(int groupId)
+        public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId)
         {
             return _appRoleRepository.GetListRoleByGroupId(groupId);
         }

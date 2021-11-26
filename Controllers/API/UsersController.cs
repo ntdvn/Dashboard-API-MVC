@@ -18,9 +18,9 @@ namespace DashboardMVC.Controllers.API
         }
 
         [HttpGet]
-        public IEnumerable<MemberDto> get()
+        public ActionResult<IEnumerable<MemberDto>> Read()
         {
-            return this._usersRepository.GetUsersAsync();
+            return Ok(this._usersRepository.GetUsersAsync());
         }
     }
 }

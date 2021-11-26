@@ -23,16 +23,6 @@ namespace DashboardMVC.Controllers.API
             this._applicationRoleService = applicationRoleService;
         }
 
-        [HttpGet]
-        public ActionResult<BaseDto> Read(RoleDto roleDto)
-        {
-            return Ok(new BaseDto
-            {
-                Status = true,
-                Data = _mapper.Map<IEnumerable<ApplicationRole>, IEnumerable<RoleDto>>(_applicationRoleService.GetAll()),
-            });
-        }
-
         [HttpPost]
         public ActionResult<BaseDto> Create(RoleDto roleDto)
         {
@@ -64,6 +54,17 @@ namespace DashboardMVC.Controllers.API
                     Status = false
                 });
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult<BaseDto> Read()
+        {
+            return Ok(new BaseDto
+            {
+                Status = true,
+                Data = _mapper.Map<IEnumerable<ApplicationRole>, IEnumerable<RoleDto>>(_applicationRoleService.GetAll()),
+            });
         }
     }
 }

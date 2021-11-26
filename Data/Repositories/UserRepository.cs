@@ -18,9 +18,9 @@ namespace DashboardMVC.Data
             this._applicationDbContext = applicationDbContext;
         }
 
-        public async Task<MemberDto> GetUserByIdAsync(string id)
+        public async Task<MemberDto> GetUserByIdAsync(Guid id)
         {
-            var user = await _applicationDbContext.Users.FindAsync(new Guid(id));
+            var user = await _applicationDbContext.Users.FindAsync(id);
             return _mapper.Map<MemberDto>(user);
         }
     }

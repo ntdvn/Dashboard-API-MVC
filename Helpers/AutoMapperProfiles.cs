@@ -20,6 +20,10 @@ namespace DashboardMVC.Helpers
 
             CreateMap<ApplicationGroup, ApplicationGroupDto>();
             CreateMap<ApplicationGroupDto, ApplicationGroup>();
+
+
+            // CreateMap<ApplicationUser, UserDto>();
+            // CreateMap<UserDto, ApplicationUser>();
         }
     }
 }

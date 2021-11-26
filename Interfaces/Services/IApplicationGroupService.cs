@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 
 namespace DashboardMVC.Interfaces.Services
@@ -11,7 +11,7 @@ namespace DashboardMVC.Interfaces.Services
 
         IEnumerable<ApplicationGroup> GetAll(int page, int pageSize, out int totalRow, string filter);
 
-        IEnumerable<ApplicationGroup> GetAll();
+        IEnumerable<ApplicationGroupDto> GetAll();
 
         ApplicationGroup Add(ApplicationGroup applicationGroup);
 
@@ -21,10 +21,11 @@ namespace DashboardMVC.Interfaces.Services
 
         bool AddUserToGroups(IEnumerable<ApplicationUserGroup> groups, Guid userId);
 
-        IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId);
+        IEnumerable<ApplicationGroupDto> GetListGroupByUserId(string userId);
 
         IEnumerable<ApplicationUser> GetListGroupByGroupId(int groupId);
 
+        IEnumerable<ApplicationRoleGroupDto> GetListGroupWithRoles();
         void Save();
     }
 }
