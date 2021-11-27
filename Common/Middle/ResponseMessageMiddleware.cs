@@ -59,6 +59,15 @@ namespace DashboardMVC.Common.Middlewares
                             }
                         }, jsonOptions.Value.JsonSerializerOptions);
                         break;
+                    case 500:
+                        await httpContext.Response.WriteAsJsonAsync(new BaseDto
+                        {
+                            Status = false,
+                            Messages = new string[] {
+                                _localizer["server_error_405"]
+                            }
+                        }, jsonOptions.Value.JsonSerializerOptions);
+                        break;
                 }
                 return;
             }

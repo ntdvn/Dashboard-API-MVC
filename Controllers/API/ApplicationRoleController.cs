@@ -8,6 +8,7 @@ using DashboardMVC.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace DashboardMVC.Controllers.API
 {
@@ -49,9 +50,11 @@ namespace DashboardMVC.Controllers.API
             }
             else
             {
+                var error = ModelState.Values.Where(v => v.Errors.Count > 0).SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return BadRequest(new BaseDto
                 {
-                    Status = false
+                    Status = false,
+                    Messages = error.ToArray()
                 });
             }
         }

@@ -16,7 +16,7 @@ namespace DashboardMVC.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-
+            services.AddScoped<ResourceManager, ResourceManager>();
             services.AddScoped<IDbFactory, DbFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
