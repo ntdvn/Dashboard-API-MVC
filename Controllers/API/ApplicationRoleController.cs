@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using DashboardMVC.Helpers.Params;
 
 namespace DashboardMVC.Controllers.API
 {
@@ -25,7 +26,7 @@ namespace DashboardMVC.Controllers.API
         }
 
         [HttpPost]
-        public ActionResult<BaseDto> Create(RoleDto roleDto)
+        public ActionResult<BaseDto> Create(ApplicationRoleDto roleDto)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +67,18 @@ namespace DashboardMVC.Controllers.API
             return Ok(new BaseDto
             {
                 Status = true,
-                Data = _mapper.Map<IEnumerable<ApplicationRole>, IEnumerable<RoleDto>>(_applicationRoleService.GetAll()),
+                Data = _mapper.Map<IEnumerable<ApplicationRole>, IEnumerable<ApplicationRoleDto>>(_applicationRoleService.GetAll()),
+            });
+        }
+
+
+        [HttpGet("find")]
+        public ActionResult<BaseDto> Read([FromQuery] UserParams userParams)
+        {
+            return Ok(new BaseDto
+            {
+                Status = true,
+                Data = _applicationRoleService.GetListRoleByUserId(userParams.Id),
             });
         }
     }

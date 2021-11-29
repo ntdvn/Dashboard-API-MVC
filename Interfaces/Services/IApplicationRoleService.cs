@@ -25,6 +25,8 @@ namespace DashboardMVC.Interfaces.Services
         //Get list role by group id
         IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId);
 
+        IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId);
+
         void Save();
     }
 }

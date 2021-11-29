@@ -42,5 +42,25 @@ namespace DashboardMVC.Data
                 )
                 .ToList();
         }
+
+        public IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId)
+        {
+            return DbContext
+                .UserRoles
+                .Where(aur => aur.UserId == userId)
+                .Join<ApplicationUserRole, ApplicationRole, Guid, ApplicationRoleDto>(
+                    DbContext.ApplicationRoles,
+                    aur => aur.RoleId,
+                    ar => ar.Id,
+                    (aur, ar) =>
+                        new ApplicationRoleDto
+                        {
+                            Id = ar.Id,
+                            Name = ar.Name,
+                            Description = ar.Description
+                        }
+                )
+                .ToList();
+        }
     }
 }

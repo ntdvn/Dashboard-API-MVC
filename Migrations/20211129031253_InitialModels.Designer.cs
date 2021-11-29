@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DashboardMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211125094128_InitialModels")]
+    [Migration("20211129031253_InitialModels")]
     partial class InitialModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -297,7 +297,7 @@ namespace DashboardMVC.Migrations
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationRoleGroup", b =>
                 {
                     b.HasOne("DashboardMVC.Entities.ApplicationGroup", "Group")
-                        .WithMany()
+                        .WithMany("RoleGroups")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -384,6 +384,11 @@ namespace DashboardMVC.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DashboardMVC.Entities.ApplicationGroup", b =>
+                {
+                    b.Navigation("RoleGroups");
                 });
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationRole", b =>

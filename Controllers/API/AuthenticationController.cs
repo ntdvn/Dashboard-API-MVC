@@ -55,7 +55,7 @@ namespace DashboardMVC.Controllers.API
                 return Ok(new BaseDto
                 {
                     Status = true,
-                    Data = new UserDto
+                    Data = new UserAuthDto
                     {
                         Username = user.UserName,
                         FullName = user.FullName,
@@ -89,29 +89,44 @@ namespace DashboardMVC.Controllers.API
                 }
                 else
                 {
-                    var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-                    if (!result.Succeeded) return BadRequest(new BaseDto
+                    try
                     {
-                        Status = false,
-                        Messages = new string[] { _localizer["login_failed_password"] }
-                    });
-                    return Ok(new BaseDto
-                    {
-                        Status = true,
-                        Data = new UserDto
+                        var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+                        if (!result.Succeeded) return BadRequest(new BaseDto
                         {
-                            Username = user.UserName,
-                            FullName = user.FullName,
-                            Token = await _tokenService.BuildToken(user),
-                        },
-                        Messages = new string[] { _localizer["login_success"] }
-                    });
+                            Status = false,
+                            // Messages = new string[] { _localizer["login_failed_password"] }
+                            Messages = new string[] { result.ToString() }
+                        });
+                        return Ok(new BaseDto
+                        {
+                            Status = true,
+                            Data = new UserAuthDto
+                            {
+                                Username = user.UserName,
+                                FullName = user.FullName,
+                                Token = await _tokenService.BuildToken(user),
+                            },
+                            Messages = new string[] { _localizer["login_success"] }
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest(new BaseDto
+                        {
+                            Status = false,
+                            // Messages = new string[] { _localizer["login_failed_password"] }
+                            Messages = new string[] { e.ToString() }
+                        });
+                    }
                 }
             }
             else
             {
-                var error = ModelState.Values.Where(v => v.Errors.Count > 0).SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
+                var error = ModelState.Values
+                 .Where(v => v.Errors.Count > 0)
+                 .SelectMany(v => v.Errors)
+                 .Select(v => v.ErrorMessage);
                 return BadRequest(new BaseDto
                 {
                     Status = false,

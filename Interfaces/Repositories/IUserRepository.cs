@@ -7,6 +7,6 @@ namespace DashboardMVC.Interfaces
 {
     public interface IUserRepository
     {
-        Task<MemberDto> GetUserByIdAsync(Guid id);
+        Task<UserDto> GetUserByIdAsync(Guid id);
     }
 }

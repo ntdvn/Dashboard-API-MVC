@@ -8,5 +8,8 @@ namespace DashboardMVC.Interfaces
     public interface IApplicationRoleRepository : IRepository<ApplicationRole>
     {
         IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId);
+
+
+        IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId);
     }
 }

@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System;
 using DashboardMVC.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -30,6 +31,10 @@ namespace DashboardMVC.Data
             builder.Entity<ApplicationRole>().ToTable("ApplicationRole");
             builder.Entity<ApplicationUser>().ToTable("ApplicationUser");
 
+            // builder.Entity<ApplicationUser>().HasMany(ur => ur.UserRoles).WithOne(u => u.User).HasForeignKey(ur => ur.UserId).IsRequired();
+
+            // builder.Entity<ApplicationRole>().HasMany(ur => ur.UserRoles).WithOne(u => u.Role).HasForeignKey(ur => ur.RoleId).IsRequired();
+
 
             builder
                 .Entity<ApplicationUserGroup>()
@@ -45,22 +50,13 @@ namespace DashboardMVC.Data
                     e.GroupId,
                     e.RoleId
                 });
-            // builder.Entity<ApplicationUser>()
-            //     .HasMany(ur => ur.UserGroups)
-            //     .WithOne(u => u.User)
-            //     .HasForeignKey(e => e.UserId)
-            //     .IsRequired();
-            // builder.Entity<ApplicationUser>()
-            //     .HasMany(ur => ur.UserGroups)
-            //     .WithOne(u => u.User)
-            //     .HasForeignKey(e => e.GroupId)
-            //     .IsRequired();
 
-            // builder.Entity<ApplicationRole>()
-            //     .HasMany(ur => ur.RoleGroups)
-            //     .WithOne(u => u.Role)
-            //     .HasForeignKey(e => e.RoleId)
-            //     .IsRequired();
+            builder.Entity<ApplicationUserGroup>()
+                .HasOne(ug => ug.User)
+                .WithMany(u => u.UserGroups)
+                .HasForeignKey(ug => ug.UserId)
+                .IsRequired();
+
             builder.Entity<ApplicationRoleGroup>()
                 .HasOne(ur => ur.Role)
                 .WithMany(u => u.RoleGroups)

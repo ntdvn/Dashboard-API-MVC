@@ -295,7 +295,7 @@ namespace DashboardMVC.Migrations
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationRoleGroup", b =>
                 {
                     b.HasOne("DashboardMVC.Entities.ApplicationGroup", "Group")
-                        .WithMany()
+                        .WithMany("RoleGroups")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -382,6 +382,11 @@ namespace DashboardMVC.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DashboardMVC.Entities.ApplicationGroup", b =>
+                {
+                    b.Navigation("RoleGroups");
                 });
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationRole", b =>

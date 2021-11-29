@@ -38,6 +38,7 @@ namespace DashboardMVC.Data.Services
             }
             else
             {
+                appRole.NormalizedName = appRole.Name.ToUpper();
                 return _appRoleRepository.Add(appRole);
             }
 
@@ -81,6 +82,11 @@ namespace DashboardMVC.Data.Services
         public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId)
         {
             return _appRoleRepository.GetListRoleByGroupId(groupId);
+        }
+
+        public IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId)
+        {
+            return _appRoleRepository.GetListRoleByUserId(userId);
         }
 
         public void Save()

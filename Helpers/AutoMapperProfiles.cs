@@ -11,19 +11,23 @@ namespace DashboardMVC.Helpers
             CreateMap<RegisterDto, ApplicationUser>();
             CreateMap<ApplicationUser, RegisterDto>();
 
-            CreateMap<ApplicationUser, MemberDto>();
-            CreateMap<MemberDto, ApplicationUser>();
+            CreateMap<ApplicationUser, UserDto>();
+            CreateMap<UserDto, ApplicationUser>();
 
 
-            CreateMap<ApplicationRole, RoleDto>();
-            CreateMap<RoleDto, ApplicationRole>();
+            CreateMap<ApplicationRole, ApplicationRoleDto>();
+            CreateMap<ApplicationRoleDto, ApplicationRole>();
 
             CreateMap<ApplicationGroup, ApplicationGroupDto>();
             CreateMap<ApplicationGroupDto, ApplicationGroup>();
 
 
-            // CreateMap<ApplicationUser, UserDto>();
-            // CreateMap<UserDto, ApplicationUser>();
+            CreateMap<ApplicationUser, UserPostDto>();
+            CreateMap<UserPostDto, ApplicationUser>();
+
+            // For Manager Users profile with roles
+            CreateMap<ApplicationUser, UserWithRolesDto>();
+            CreateMap<UserWithRolesDto, ApplicationUser>();
         }
     }
 }

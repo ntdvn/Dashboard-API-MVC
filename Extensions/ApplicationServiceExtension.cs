@@ -25,8 +25,10 @@ namespace DashboardMVC.Extensions
             services.AddScoped<IApplicationRoleGroupRepository, ApplicationRoleGroupRepository>();
             services.AddScoped<IApplicationRoleRepository, ApplicationRoleRepository>();
 
-            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IApplicationUsersRepository, ApplicationUsersRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IApplicationUsersService, ApplicationUsersService>();
 
             services.AddScoped<IApplicationGroupService, ApplicationGroupService>();
 

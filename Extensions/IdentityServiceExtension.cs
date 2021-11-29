@@ -19,6 +19,12 @@ namespace DashboardMVC.Extensions
                 .AddIdentityCore<ApplicationUser>(opt =>
                 {
                     opt.Password.RequireNonAlphanumeric = false;
+                    opt.Password.RequiredLength = 6;
+                    opt.Password.RequireLowercase = true;
+
+                    // opt.User.RequireUniqueEmail = true;
+                    // opt.SignIn.RequireConfirmedAccount = true;
+
                 })
                 .AddRoles<ApplicationRole>()
                 .AddRoleManager<RoleManager<ApplicationRole>>()
