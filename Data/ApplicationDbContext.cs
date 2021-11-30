@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DashboardMVC.Data
 {
     public class ApplicationDbContext
-        : IdentityDbContext<ApplicationUser, ApplicationRole, Guid,
+        : IdentityDbContext<ApplicationUser, ApplicationRole, int,
             ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
             ApplicationRoleClaim, ApplicationUserToken>
     {
@@ -34,7 +34,12 @@ namespace DashboardMVC.Data
             // builder.Entity<ApplicationUser>().HasMany(ur => ur.UserRoles).WithOne(u => u.User).HasForeignKey(ur => ur.UserId).IsRequired();
 
             // builder.Entity<ApplicationRole>().HasMany(ur => ur.UserRoles).WithOne(u => u.Role).HasForeignKey(ur => ur.RoleId).IsRequired();
-
+            builder
+                .Entity<ApplicationGroup>()
+                .HasKey(e => new
+                {
+                    e.Id,
+                });
 
             builder
                 .Entity<ApplicationUserGroup>()

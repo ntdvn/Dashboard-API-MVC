@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DashboardMVC.Entities
 {
-    public class ApplicationRole : IdentityRole<Guid>
+    public class ApplicationRole : IdentityRole<int>
     {
         public ICollection<ApplicationRoleGroup> RoleGroups { get; set; }
 

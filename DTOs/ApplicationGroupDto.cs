@@ -6,7 +6,7 @@ namespace DashboardMVC.DTOs
 {
     public class ApplicationGroupDto
     {
-        public Guid Id { get; set; }
+        public Nullable<int> Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

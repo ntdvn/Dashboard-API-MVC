@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DashboardMVC.DTOs;
+using DashboardMVC.Entities;
 using DashboardMVC.Helpers;
 using DashboardMVC.Helpers.Params;
 using DashboardMVC.Interfaces;
@@ -12,9 +14,18 @@ namespace DashboardMVC.Data.Services
     public class ApplicationUsersService : IApplicationUsersService
     {
         private readonly IApplicationUsersRepository _applicationUsersRepository;
-        public ApplicationUsersService(IApplicationUsersRepository applicationUsersRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public ApplicationUsersService(IUnitOfWork unitOfWork, IApplicationUsersRepository applicationUsersRepository)
         {
+            this._unitOfWork = unitOfWork;
             this._applicationUsersRepository = applicationUsersRepository;
+        }
+
+
+
+        public ApplicationUser GetBy(Expression<Func<ApplicationUser, bool>> predicate)
+        {
+            return this._applicationUsersRepository.GetSingleByCondition(predicate);
         }
 
         public Task<PageList<UserDto>> GetUsersAsync(UserParams usersParams)
@@ -25,6 +36,11 @@ namespace DashboardMVC.Data.Services
         public Task<PageList<UserWithRolesDto>> GetUsersWithRoleAsync(UserParams usersParams)
         {
             return _applicationUsersRepository.GetUsersWithRoleAsync(usersParams);
+        }
+
+        public void Save()
+        {
+            _unitOfWork.Commit();
         }
     }
 }

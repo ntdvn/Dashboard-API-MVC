@@ -7,8 +7,8 @@ namespace DashboardMVC.Entities
     public class ApplicationUserGroup
     {
         [StringLength(128)]
-        public Guid UserId { get; set; }
-        public Guid GroupId { get; set; }
+        public int UserId { get; set; }
+        public int GroupId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
         [ForeignKey("GroupId")]

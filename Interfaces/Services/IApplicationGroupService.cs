@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 
@@ -7,6 +8,8 @@ namespace DashboardMVC.Interfaces.Services
 {
     public interface IApplicationGroupService
     {
+
+        ApplicationGroup GetBy(Expression<Func<ApplicationGroup, bool>> predicate);
         ApplicationGroup GetDetail(int id);
 
         IEnumerable<ApplicationGroup> GetAll(int page, int pageSize, out int totalRow, string filter);
@@ -19,7 +22,7 @@ namespace DashboardMVC.Interfaces.Services
 
         ApplicationGroup Delete(int id);
 
-        bool AddUserToGroups(IEnumerable<ApplicationUserGroup> groups, Guid userId);
+        bool AddUserToGroups(IEnumerable<ApplicationUserGroup> groups, int userId);
 
         IEnumerable<ApplicationGroupDto> GetListGroupByUserId(string userId);
 

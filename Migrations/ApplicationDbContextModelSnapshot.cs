@@ -21,9 +21,10 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationGroup", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Description")
                         .HasMaxLength(250)
@@ -40,9 +41,10 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationRole", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -82,8 +84,8 @@ namespace DashboardMVC.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -94,12 +96,12 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationRoleGroup", b =>
                 {
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasMaxLength(128)
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
                     b.HasKey("GroupId", "RoleId");
 
@@ -110,9 +112,10 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
@@ -192,8 +195,8 @@ namespace DashboardMVC.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -204,12 +207,12 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationUserGroup", b =>
                 {
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("GroupId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<int>("UserId")
                         .HasMaxLength(128)
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
                     b.HasKey("GroupId", "UserId");
 
@@ -229,8 +232,8 @@ namespace DashboardMVC.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -241,17 +244,17 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationUserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("RoleId1")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("RoleId1")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -266,8 +269,8 @@ namespace DashboardMVC.Migrations
 
             modelBuilder.Entity("DashboardMVC.Entities.ApplicationUserToken", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");

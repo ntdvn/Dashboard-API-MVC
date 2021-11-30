@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using DashboardMVC.Common.Exceptions;
 using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
@@ -30,9 +31,14 @@ namespace DashboardMVC.Data.Services
             this._unitOfWork = unitOfWork;
         }
 
+        public ApplicationRole GetBy(Expression<Func<ApplicationRole, bool>> predicate)
+        {
+            return _appRoleRepository.GetSingleByCondition(predicate);
+        }
+
         public ApplicationRole Add(ApplicationRole appRole)
         {
-            if (_appRoleRepository.CheckContains(x => x.Description == appRole.Description))
+            if (_appRoleRepository.CheckContains(x => x.Name == appRole.Name))
             {
                 throw new DuplicatedException(_localizer["exception_duplicated", appRole.Name]);
             }
@@ -44,7 +50,7 @@ namespace DashboardMVC.Data.Services
 
         }
 
-        public bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, Guid groupId)
+        public bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, int groupId)
         {
             _applicationRoleGroupRepository.DeleteMulti(x => x.GroupId == groupId);
             foreach (var roleGroup in roleGroups)
@@ -52,11 +58,11 @@ namespace DashboardMVC.Data.Services
                 _applicationRoleGroupRepository.Add(roleGroup);
             }
             return true;
-        }
+        }   
 
-        public void Delete(string id)
+        public void Delete(int id)
         {
-            _appRoleRepository.DeleteMulti(x => x.Id.CompareTo(id) == 0);
+            _appRoleRepository.DeleteMulti(x => x.Id == id);
         }
 
         public IEnumerable<ApplicationRole> GetAll(int page, int pageSize, out int totalRow, string filter)
@@ -74,17 +80,19 @@ namespace DashboardMVC.Data.Services
             return _appRoleRepository.GetAll();
         }
 
-        public ApplicationRole GetDetail(string id)
+
+
+        public ApplicationRole GetDetail(int id)
         {
-            return _appRoleRepository.GetSingleByCondition(x => x.Id.CompareTo(id) == 0);
+            return _appRoleRepository.GetSingleByCondition(x => x.Id == id);
         }
 
-        public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId)
+        public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(int groupId)
         {
             return _appRoleRepository.GetListRoleByGroupId(groupId);
         }
 
-        public IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId)
+        public IEnumerable<ApplicationRoleDto> GetListRoleByUserId(int userId)
         {
             return _appRoleRepository.GetListRoleByUserId(userId);
         }

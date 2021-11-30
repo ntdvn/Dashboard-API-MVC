@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 namespace DashboardMVC.Entities
 {
     // [Table("ApplicationUser")]
-    public class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<int>
     {
         public string FullName { get; set; }
 

@@ -20,11 +20,11 @@ namespace DashboardMVC.Data
         {
             return DbContext
                 .ApplicationGroups
-                .Join<ApplicationGroup, ApplicationUserGroup, Guid, ApplicationGroup>(DbContext.ApplicationUserGroups, ag => ag.Id, aug => aug.GroupId, (ag, aug) => new ApplicationGroup
+                .Join<ApplicationGroup, ApplicationUserGroup, int, ApplicationGroup>(DbContext.ApplicationUserGroups, ag => ag.Id, aug => aug.GroupId, (ag, aug) => new ApplicationGroup
                 {
 
                 });
-            // .Where(x => x.Id == Guid.Parse(userId)).ToList();
+            // .Where(x => x.Id == int.Parse(userId)).ToList();
         }
 
 
@@ -33,7 +33,7 @@ namespace DashboardMVC.Data
         {
             return DbContext
                 .ApplicationGroups
-                .Join<ApplicationGroup, ApplicationUserGroup, Guid, ApplicationUser>(DbContext.ApplicationUserGroups, ag => ag.Id, aug => aug.UserId, (ag, aug) => new ApplicationUser
+                .Join<ApplicationGroup, ApplicationUserGroup, int, ApplicationUser>(DbContext.ApplicationUserGroups, ag => ag.Id, aug => aug.UserId, (ag, aug) => new ApplicationUser
                 {
 
                 });

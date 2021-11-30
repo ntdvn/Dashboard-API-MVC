@@ -8,9 +8,9 @@ namespace DashboardMVC.Entities
     [Table("ApplicationGroups")]
     public class ApplicationGroup
     {
-        [Key]
+        // [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [StringLength(250)]
         public string Name { get; set; }
         [StringLength(250)]

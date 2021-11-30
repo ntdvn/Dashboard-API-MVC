@@ -7,7 +7,7 @@ namespace DashboardMVC.DTOs
 {
     public class ApplicationRoleGroupDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string GroupName { get; set; }
         public string Description { get; set; }
         public IEnumerable<ApplicationRoleDto> Roles { get; set; }

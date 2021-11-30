@@ -1,9 +1,8 @@
-using System;
-
 namespace DashboardMVC.Helpers.Params
 {
-    public class UserParams : PaginationParams
+    public class RoleParams
     {
         public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

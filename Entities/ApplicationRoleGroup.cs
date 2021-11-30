@@ -9,9 +9,9 @@ namespace DashboardMVC.Entities
 
     public class ApplicationRoleGroup
     {
-        public Guid GroupId { get; set; }
+        public int GroupId { get; set; }
         [StringLength(128)]
-        public Guid RoleId { get; set; }
+        public int RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual ApplicationRole Role { get; set; }
         public virtual ApplicationGroup Group { get; set; }

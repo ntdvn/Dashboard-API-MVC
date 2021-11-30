@@ -28,3 +28,13 @@ msgstr "405 Phương thức không được hỗ trợ"
 
 msgid "exception_duplicated"
 msgstr "Đối tượng đã tồn tại!"
+msgid "exception_not_exist"
+msgstr "Đối tượng không tồn tại!"
+
+msgid "success_created"
+msgstr "Đối tượng đã được tạo thành công!"
+msgid "success_updated"
+msgstr "Đối tượng đã được cập nhật thành công!"
+msgid "success_deleted"
+msgstr "Đối tượng đã bị xóa!"
+

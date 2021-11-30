@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace DashboardMVC.Entities
 {
-    public class ApplicationUserLogin : IdentityUserLogin<Guid>
+    public class ApplicationUserLogin : IdentityUserLogin<int>
     {
         
     }

@@ -13,11 +13,11 @@ namespace DashboardMVC.Data
         {
         }
 
-        public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId)
+        public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(int groupId)
         {
             return DbContext
                 .ApplicationGroups
-                .Join<ApplicationGroup, ApplicationRoleGroup, Guid, ApplicationRoleGroup>(
+                .Join<ApplicationGroup, ApplicationRoleGroup, int, ApplicationRoleGroup>(
                     DbContext.ApplicationRoleGroups,
                     ar => ar.Id, arg => arg.GroupId,
                     (ArgIterator, arg) =>
@@ -28,7 +28,7 @@ namespace DashboardMVC.Data
                         }
                 )
                 .Where(arg => arg.GroupId == groupId)
-                .Join<ApplicationRoleGroup, ApplicationRole, Guid, ApplicationRoleDto>(
+                .Join<ApplicationRoleGroup, ApplicationRole, int, ApplicationRoleDto>(
                     DbContext.ApplicationRoles,
                     arg => arg.RoleId, ar => ar.Id,
                     (arg, ar) =>
@@ -43,12 +43,12 @@ namespace DashboardMVC.Data
                 .ToList();
         }
 
-        public IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId)
+        public IEnumerable<ApplicationRoleDto> GetListRoleByUserId(int userId)
         {
             return DbContext
                 .UserRoles
                 .Where(aur => aur.UserId == userId)
-                .Join<ApplicationUserRole, ApplicationRole, Guid, ApplicationRoleDto>(
+                .Join<ApplicationUserRole, ApplicationRole, int, ApplicationRoleDto>(
                     DbContext.ApplicationRoles,
                     aur => aur.RoleId,
                     ar => ar.Id,

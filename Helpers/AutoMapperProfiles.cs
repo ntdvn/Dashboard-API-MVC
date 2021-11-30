@@ -22,8 +22,8 @@ namespace DashboardMVC.Helpers
             CreateMap<ApplicationGroupDto, ApplicationGroup>();
 
 
-            CreateMap<ApplicationUser, UserPostDto>();
-            CreateMap<UserPostDto, ApplicationUser>();
+            CreateMap<ApplicationUser, UserCreateDto>();
+            CreateMap<UserCreateDto, ApplicationUser>();
 
             // For Manager Users profile with roles
             CreateMap<ApplicationUser, UserWithRolesDto>();

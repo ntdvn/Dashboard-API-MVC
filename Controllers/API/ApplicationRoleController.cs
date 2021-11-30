@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using DashboardMVC.Helpers.Params;
+using Microsoft.Extensions.Localization;
+using DashboardMVC.Helpers;
 
 namespace DashboardMVC.Controllers.API
 {
@@ -19,45 +21,80 @@ namespace DashboardMVC.Controllers.API
     {
         private IApplicationRoleService _applicationRoleService;
         private readonly IMapper _mapper;
-        public ApplicationRoleController(IApplicationRoleService applicationRoleService, IMapper mapper)
+        private readonly IStringLocalizer<SharedResource> _localizer;
+        public ApplicationRoleController(IApplicationRoleService applicationRoleService, IMapper mapper, IStringLocalizer<SharedResource> localizer)
         {
+            this._localizer = localizer;
             this._mapper = mapper;
             this._applicationRoleService = applicationRoleService;
         }
 
         [HttpPost]
-        public ActionResult<BaseDto> Create(ApplicationRoleDto roleDto)
+        public ActionResult<BaseDto> CreateAndUpdate(ApplicationRoleDto roleDto)
         {
-            if (ModelState.IsValid)
+            if (roleDto.Id == null)
             {
-                try
+                // CREATE
+                if (ModelState.IsValid)
                 {
-                    _applicationRoleService.Add(_mapper.Map<ApplicationRole>(roleDto));
-                    _applicationRoleService.Save();
-                    return Ok(new BaseDto
+                    try
                     {
-                        Status = true,
-                        Data = roleDto
-                    });
+                        var createdRole = _applicationRoleService.Add(_mapper.Map<ApplicationRole>(roleDto));
+                        _applicationRoleService.Save();
+                        return Ok(new BaseDto
+                        {
+                            Status = true,
+                            Data = _mapper.Map<ApplicationRoleDto>(createdRole),
+                            Messages = new string[] { _localizer["success_created"] }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest(new BaseDto
+                        {
+                            Status = false,
+                            Messages = new string[] { ex.Message }
+                        });
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
+                    var error = ModelState.Values.Where(v => v.Errors.Count > 0).SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                     return BadRequest(new BaseDto
                     {
                         Status = false,
-                        Messages = new string[] { ex.Message }
+                        Messages = error.ToArray()
                     });
                 }
             }
             else
             {
-                var error = ModelState.Values.Where(v => v.Errors.Count > 0).SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
-                return BadRequest(new BaseDto
+                // UPDATE
+                var foundRole = _applicationRoleService.GetBy(e => e.Id == roleDto.Id);
+                foundRole.Description = roleDto.Description;
+                if (foundRole == null)
                 {
-                    Status = false,
-                    Messages = error.ToArray()
-                });
+                    return NotFound(new BaseDto
+                    {
+                        Status = false,
+                        Messages = new string[] { _localizer["exception_not_exist"] }
+                    });
+                }
+                else
+                {
+                    foundRole.Description = roleDto.Description;
+                    _applicationRoleService.Save();
+                    return Ok(new BaseDto
+                    {
+                        Status = true,
+                        Data = _mapper.Map<ApplicationRoleDto>(foundRole),
+                        Messages = new string[] { _localizer["success_updated"] }
+                    });
+                }
+
             }
+
+
         }
 
 
@@ -79,6 +116,19 @@ namespace DashboardMVC.Controllers.API
             {
                 Status = true,
                 Data = _applicationRoleService.GetListRoleByUserId(userParams.Id),
+            });
+        }
+
+        [HttpDelete]
+        public ActionResult<BaseDto> Delete([FromQuery] RoleParams roleParams)
+        {
+            _applicationRoleService.Delete(roleParams.Id);
+            _applicationRoleService.Save();
+
+            return Ok(new BaseDto
+            {
+                Status = true,
+                Messages = new string[] { _localizer["success_deleted"] }
             });
         }
     }

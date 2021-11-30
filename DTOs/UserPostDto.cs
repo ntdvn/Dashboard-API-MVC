@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DashboardMVC.DTOs
 {
-    public class UserPostDto
+    public class UserCreateDto
     {
+        public Nullable<int> Id { get; set; }
         [Required(ErrorMessage = "register_required_username")]
         public string Username { get; set; }
         [Required(ErrorMessage = "register_required_password")]
@@ -20,6 +21,6 @@ namespace DashboardMVC.DTOs
 
     public class UserPostGroup {
         [Required]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }

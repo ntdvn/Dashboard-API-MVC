@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using DashboardMVC.DTOs;
 using DashboardMVC.Entities;
 
@@ -7,8 +8,8 @@ namespace DashboardMVC.Interfaces.Services
 {
     public interface IApplicationRoleService
     {
-        ApplicationRole GetDetail(string id);
-
+        ApplicationRole GetBy(Expression<Func<ApplicationRole, bool>> predicate);
+        ApplicationRole GetDetail(int id);
         IEnumerable<ApplicationRole> GetAll(int page, int pageSize, out int totalRow, string filter);
 
         IEnumerable<ApplicationRole> GetAll();
@@ -17,15 +18,15 @@ namespace DashboardMVC.Interfaces.Services
 
         void Update(ApplicationRole AppRole);
 
-        void Delete(string id);
+        void Delete(int id);
 
         //Add roles to a sepcify group
-        bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, Guid groupId);
+        bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, int groupId);
 
         //Get list role by group id
-        IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(Guid groupId);
+        IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(int groupId);
 
-        IEnumerable<ApplicationRoleDto> GetListRoleByUserId(Guid userId);
+        IEnumerable<ApplicationRoleDto> GetListRoleByUserId(int userId);
 
         void Save();
     }

@@ -12,7 +12,8 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationGroups",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true)
                 },
@@ -25,7 +26,8 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationRole",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -40,7 +42,8 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationUser",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FullName = table.Column<string>(type: "text", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -69,7 +72,7 @@ namespace DashboardMVC.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -88,8 +91,8 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationRoleGroups",
                 columns: table => new
                 {
-                    GroupId = table.Column<Guid>(type: "uuid", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uuid", maxLength: 128, nullable: false)
+                    GroupId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,7 +117,7 @@ namespace DashboardMVC.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     ClaimType = table.Column<string>(type: "text", nullable: true),
                     ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
@@ -133,8 +136,8 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationUserGroups",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uuid", maxLength: 128, nullable: false),
-                    GroupId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<int>(type: "integer", maxLength: 128, nullable: false),
+                    GroupId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,7 +163,7 @@ namespace DashboardMVC.Migrations
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
                     ProviderKey = table.Column<string>(type: "text", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -177,10 +180,10 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationUserRole",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId1 = table.Column<Guid>(type: "uuid", nullable: true),
-                    RoleId1 = table.Column<Guid>(type: "uuid", nullable: true)
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
+                    UserId1 = table.Column<int>(type: "integer", nullable: true),
+                    RoleId1 = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -215,7 +218,7 @@ namespace DashboardMVC.Migrations
                 name: "ApplicationUserToken",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true)

@@ -11,6 +11,7 @@ using DashboardMVC.Helpers;
 using DashboardMVC.Interfaces;
 using DashboardMVC.Interfaces.Services;
 using Microsoft.Extensions.Localization;
+using System.Linq.Expressions;
 
 namespace DashboardMVC.Data.Services
 {
@@ -33,6 +34,12 @@ namespace DashboardMVC.Data.Services
             this._appUserGroupRepository = appUserGroupRepository;
             this._unitOfWork = unitOfWork;
         }
+
+        public ApplicationGroup GetBy(Expression<Func<ApplicationGroup, bool>> predicate)
+        {
+            return _appGroupRepository.GetSingleByCondition(predicate);
+        }
+
         public ApplicationGroup Add(ApplicationGroup applicationGroup)
         {
             if (_appGroupRepository.CheckContains(x => x.Name == applicationGroup.Name))
@@ -45,7 +52,7 @@ namespace DashboardMVC.Data.Services
             }
         }
 
-        public bool AddUserToGroups(IEnumerable<ApplicationUserGroup> userGroups, Guid userId)
+        public bool AddUserToGroups(IEnumerable<ApplicationUserGroup> userGroups, int userId)
         {
             _appUserGroupRepository.DeleteMulti(x => x.UserId == userId);
             foreach (var userGroup in userGroups)
@@ -79,7 +86,7 @@ namespace DashboardMVC.Data.Services
 
         public ApplicationGroup GetDetail(int id)
         {
-            throw new System.NotImplementedException();
+            return _appGroupRepository.GetSingleById(id);
         }
 
         public IEnumerable<ApplicationUser> GetListGroupByGroupId(int groupId)

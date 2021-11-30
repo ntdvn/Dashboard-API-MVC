@@ -27,7 +27,7 @@ namespace DashboardMVC.Extensions
                     new CultureInfo("es")
                 };
 
-                options.DefaultRequestCulture = new RequestCulture("en");
+                options.DefaultRequestCulture = new RequestCulture("vi");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
 
@@ -36,7 +36,7 @@ namespace DashboardMVC.Extensions
                     //...
                     var userLangs = context.Request.Headers["Accept-Language"].ToString();
                     var firstLang = userLangs.Split(',').FirstOrDefault();
-                    var defaultLang = string.IsNullOrEmpty(firstLang) ? "en" : firstLang;
+                    var defaultLang = string.IsNullOrEmpty(firstLang) ? "vi" : firstLang;
                     return Task.FromResult(new ProviderCultureResult(defaultLang, defaultLang));
                 }));
             }); services
