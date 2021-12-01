@@ -58,7 +58,7 @@ namespace DashboardMVC.Data.Services
                 _applicationRoleGroupRepository.Add(roleGroup);
             }
             return true;
-        }   
+        }
 
         public void Delete(int id)
         {
