@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DashboardMVC.DTOs;
@@ -25,7 +24,7 @@ namespace DashboardMVC.Data.Services
 
         public ApplicationUser GetBy(Expression<Func<ApplicationUser, bool>> predicate)
         {
-            return this._applicationUsersRepository.GetSingleByCondition(predicate);
+            return this._applicationUsersRepository.GetBy(predicate);
         }
 
         public Task<PageList<UserDto>> GetUsersAsync(UserParams usersParams)

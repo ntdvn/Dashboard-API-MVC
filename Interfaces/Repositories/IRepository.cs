@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System;
 using System.Linq.Expressions;
@@ -15,21 +16,19 @@ namespace DashboardMVC.Interfaces
 
         T Delete(int id);
 
-        void DeleteMulti(Expression<Func<T, bool>> where);
+        void DeletesBy(Expression<Func<T, bool>> expression);
 
-        T GetSingleById(int id);
+        T GetById(int id);
 
-        T GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null);
+        T GetBy(Expression<Func<T, bool>> expression);
 
-        IEnumerable<T> GetAll(string[] includes = null);
+        IQueryable<T> Gets();
 
-        IEnumerable<T> GetMulti(Expression<Func<T, bool>> predicate, string[] includes = null);
-
-        IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0, int size = 50, string[] includes = null);
+        IQueryable<T> GetsBy(Expression<Func<T, bool>> expression);
 
         int Count(Expression<Func<T, bool>> where);
 
-        bool CheckContains(Expression<Func<T, bool>> predicate);
+        bool CheckContains(Expression<Func<T, bool>> expression);
 
     }
 }

@@ -33,7 +33,7 @@ namespace DashboardMVC.Data.Services
 
         public ApplicationRole GetBy(Expression<Func<ApplicationRole, bool>> predicate)
         {
-            return _appRoleRepository.GetSingleByCondition(predicate);
+            return _appRoleRepository.GetBy(predicate);
         }
 
         public ApplicationRole Add(ApplicationRole appRole)
@@ -52,7 +52,7 @@ namespace DashboardMVC.Data.Services
 
         public bool AddRolesToGroup(IEnumerable<ApplicationRoleGroup> roleGroups, int groupId)
         {
-            _applicationRoleGroupRepository.DeleteMulti(x => x.GroupId == groupId);
+            _applicationRoleGroupRepository.DeletesBy(x => x.GroupId == groupId);
             foreach (var roleGroup in roleGroups)
             {
                 _applicationRoleGroupRepository.Add(roleGroup);
@@ -62,12 +62,12 @@ namespace DashboardMVC.Data.Services
 
         public void Delete(int id)
         {
-            _appRoleRepository.DeleteMulti(x => x.Id == id);
+            _appRoleRepository.DeletesBy(x => x.Id == id);
         }
 
         public IEnumerable<ApplicationRole> GetAll(int page, int pageSize, out int totalRow, string filter)
         {
-            var query = _appRoleRepository.GetAll();
+            var query = _appRoleRepository.Gets();
             if (!string.IsNullOrEmpty(filter))
                 query = query.Where(x => x.Description.Contains(filter));
 
@@ -77,14 +77,14 @@ namespace DashboardMVC.Data.Services
 
         public IEnumerable<ApplicationRole> GetAll()
         {
-            return _appRoleRepository.GetAll();
+            return _appRoleRepository.Gets();
         }
 
 
 
         public ApplicationRole GetDetail(int id)
         {
-            return _appRoleRepository.GetSingleByCondition(x => x.Id == id);
+            return _appRoleRepository.GetBy(x => x.Id == id);
         }
 
         public IEnumerable<ApplicationRoleDto> GetListRoleByGroupId(int groupId)

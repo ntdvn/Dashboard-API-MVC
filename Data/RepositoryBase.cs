@@ -31,20 +31,18 @@ namespace DashboardMVC.Data
             _dbSet = DbContext.Set<T>();
         }
 
+
+
         #region Implementation
         public T Add(T entity)
         {
             return _dbSet.Add(entity).Entity;
         }
 
-        public bool CheckContains(Expression<Func<T, bool>> predicate)
+        public void Update(T entity)
         {
-            return _dbContext.Set<T>().Count<T>(predicate) > 0;
-        }
-
-        public int Count(Expression<Func<T, bool>> where)
-        {
-            return _dbSet.Count(where);
+            _dbSet.Attach(entity);
+            _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public T Delete(T entity)
@@ -58,84 +56,42 @@ namespace DashboardMVC.Data
             return _dbSet.Remove(entity).Entity;
         }
 
-        public void DeleteMulti(Expression<Func<T, bool>> where)
+        public void DeletesBy(Expression<Func<T, bool>> where)
         {
             IEnumerable<T> objects = _dbSet.Where<T>(where).AsEnumerable();
             foreach (T obj in objects)
                 _dbSet.Remove(obj);
         }
 
-        public IEnumerable<T> GetAll(string[] includes = null)
+        public T GetById(int id)
         {
-            if (includes != null && includes.Count() > 0)
-            {
-                var query = _dbContext.Set<T>().Include(includes.First());
-                foreach (var include in includes.Skip(1))
-                    query = query.Include(include);
-                return query.AsQueryable();
-            }
-
-            return _dbContext.Set<T>().AsQueryable();
+            return _dbContext.Set<T>().Find();
         }
 
-        public IEnumerable<T> GetMulti(Expression<Func<T, bool>> predicate, string[] includes = null)
+        public T GetBy(Expression<Func<T, bool>> expression)
         {
-            if (includes != null && includes.Count() > 0)
-            {
-                var query = _dbContext.Set<T>().Include(includes.First());
-                foreach (var include in includes.Skip(1))
-                    query = query.Include(include);
-                return query.Where<T>(predicate).AsQueryable<T>();
-            }
-
-            return _dbContext.Set<T>().Where<T>(predicate).AsQueryable<T>();
+            return _dbContext.Set<T>().Find(expression);
         }
 
-        public IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0, int size = 50, string[] includes = null)
+        public IQueryable<T> Gets()
         {
-            int skipCount = index * size;
-            IQueryable<T> _resetSet;
-
-            //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
-            if (includes != null && includes.Count() > 0)
-            {
-                var query = _dbContext.Set<T>().Include(includes.First());
-                foreach (var include in includes.Skip(1))
-                    query = query.Include(include);
-                _resetSet = predicate != null ? query.Where<T>(predicate).AsQueryable() : query.AsQueryable();
-            }
-            else
-            {
-                _resetSet = predicate != null ? _dbContext.Set<T>().Where<T>(predicate).AsQueryable() : _dbContext.Set<T>().AsQueryable();
-            }
-
-            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
-            total = _resetSet.Count();
-            return _resetSet.AsQueryable();
+            return _dbContext.Set<T>();
         }
 
-        public T GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null)
+        public IQueryable<T> GetsBy(Expression<Func<T, bool>> expression)
         {
-            if (includes != null && includes.Count() > 0)
-            {
-                var query = _dbContext.Set<T>().Include(includes.First());
-                foreach (var include in includes.Skip(1))
-                    query = query.Include(include);
-                return query.FirstOrDefault(expression);
-            }
-            return _dbContext.Set<T>().FirstOrDefault(expression);
+            return _dbContext.Set<T>().Where<T>(expression).AsQueryable<T>();
         }
 
-        public T GetSingleById(int id)
+        public int Count(Expression<Func<T, bool>> where)
         {
-            return _dbSet.Find(id);
+            return _dbSet.Count(where);
         }
 
-        public void Update(T entity)
+        public bool CheckContains(Expression<Func<T, bool>> expression)
         {
-            _dbSet.Attach(entity);
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            return _dbContext.Set<T>().Count<T>(expression) > 0;
         }
+        #endregion
     }
-    #endregion
 }

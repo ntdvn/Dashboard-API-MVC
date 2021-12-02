@@ -37,7 +37,7 @@ namespace DashboardMVC.Data.Services
 
         public ApplicationGroup GetBy(Expression<Func<ApplicationGroup, bool>> predicate)
         {
-            return _appGroupRepository.GetSingleByCondition(predicate);
+            return _appGroupRepository.GetBy(predicate);
         }
 
         public ApplicationGroup Add(ApplicationGroup applicationGroup)
@@ -54,7 +54,7 @@ namespace DashboardMVC.Data.Services
 
         public bool AddUserToGroups(IEnumerable<ApplicationUserGroup> userGroups, int userId)
         {
-            _appUserGroupRepository.DeleteMulti(x => x.UserId == userId);
+            _appUserGroupRepository.DeletesBy(x => x.UserId == userId);
             foreach (var userGroup in userGroups)
             {
                 _appUserGroupRepository.Add(userGroup);
@@ -64,13 +64,13 @@ namespace DashboardMVC.Data.Services
 
         public ApplicationGroup Delete(int id)
         {
-            var applicationGroup = this._appGroupRepository.GetSingleById(id);
+            var applicationGroup = this._appGroupRepository.GetById(id);
             return _appGroupRepository.Delete(applicationGroup);
         }
 
         public IEnumerable<ApplicationGroup> GetAll(int page, int pageSize, out int totalRow, string filter)
         {
-            var query = _appGroupRepository.GetAll();
+            var query = _appGroupRepository.Gets();
             if (!string.IsNullOrEmpty(filter))
                 query = query.Where(x => x.Name.Contains(filter));
 
@@ -81,12 +81,12 @@ namespace DashboardMVC.Data.Services
 
         public IEnumerable<ApplicationGroupDto> GetAll()
         {
-            return _mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupDto>>(_appGroupRepository.GetAll());
+            return _mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupDto>>(_appGroupRepository.Gets());
         }
 
         public ApplicationGroup GetDetail(int id)
         {
-            return _appGroupRepository.GetSingleById(id);
+            return _appGroupRepository.GetById(id);
         }
 
         public IEnumerable<ApplicationUser> GetListGroupByGroupId(int groupId)
