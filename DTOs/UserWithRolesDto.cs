@@ -11,5 +11,6 @@ namespace DashboardMVC.DTOs
         public DateTime Created { get; set; }
 
         public IEnumerable<ApplicationRoleDto> Roles { get; set; }
+         public IEnumerable<ApplicationGroupDto> Groups { get; set; }
     }
 }

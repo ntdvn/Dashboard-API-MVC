@@ -6,7 +6,7 @@ namespace DashboardMVC.Interfaces
 {
     public interface IApplicationGroupRepository : IRepository<ApplicationGroup>
     {
-        IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId);
+        IEnumerable<ApplicationGroupDto> GetListGroupByUserId(int userId);
         IEnumerable<ApplicationUser> GetListUserByGroupId(int groupId);
 
         IEnumerable<ApplicationRoleGroupDto> GetListGroupWithRoles();

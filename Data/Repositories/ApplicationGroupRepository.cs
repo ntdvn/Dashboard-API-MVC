@@ -16,14 +16,17 @@ namespace DashboardMVC.Data
             this._applicationRoleRepository = applicationRoleRepository;
         }
 
-        public IEnumerable<ApplicationGroup> GetListGroupByUserId(string userId)
+        public IEnumerable<ApplicationGroupDto> GetListGroupByUserId(int userId)
         {
             return DbContext
-                .ApplicationGroups
-                .Join<ApplicationGroup, ApplicationUserGroup, int, ApplicationGroup>(DbContext.ApplicationUserGroups, ag => ag.Id, aug => aug.GroupId, (ag, aug) => new ApplicationGroup
+                .ApplicationUserGroups
+                .Where(e => e.UserId == userId)
+                .Join<ApplicationUserGroup, ApplicationGroup, int, ApplicationGroupDto>(DbContext.ApplicationGroups, aug => aug.GroupId, ag => ag.Id, (aug, ag) => new ApplicationGroupDto
                 {
-
-                });
+                    Id = ag.Id,
+                    Name = ag.Name,
+                    Description = ag.Description
+                }).ToList();
             // .Where(x => x.Id == int.Parse(userId)).ToList();
         }
 

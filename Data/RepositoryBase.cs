@@ -65,12 +65,12 @@ namespace DashboardMVC.Data
 
         public T GetById(int id)
         {
-            return _dbContext.Set<T>().Find();
+            return _dbContext.Set<T>().Find(id);
         }
 
         public T GetBy(Expression<Func<T, bool>> expression)
         {
-            return _dbContext.Set<T>().Find(expression);
+            return _dbContext.Set<T>().Where(expression).First();
         }
 
         public IQueryable<T> Gets()

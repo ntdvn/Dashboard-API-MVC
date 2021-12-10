@@ -24,7 +24,7 @@ namespace DashboardMVC.Interfaces.Services
 
         bool AddUserToGroups(IEnumerable<ApplicationUserGroup> groups, int userId);
 
-        IEnumerable<ApplicationGroupDto> GetListGroupByUserId(string userId);
+        IEnumerable<ApplicationGroupDto> GetListGroupByUserId(int userId);
 
         IEnumerable<ApplicationUser> GetListGroupByGroupId(int groupId);
 

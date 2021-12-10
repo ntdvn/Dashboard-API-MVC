@@ -14,15 +14,19 @@ namespace DashboardMVC.Data
 {
     public class ApplicationUsersRepository : RepositoryBase<ApplicationUser>, IApplicationUsersRepository
     {
-        public ApplicationUsersRepository(IDbFactory dbFactory, ApplicationDbContext applicationDbContext, IApplicationRoleRepository applicationRoleRepository, IMapper mapper) : base(dbFactory)
+
+        public ApplicationUsersRepository(IDbFactory dbFactory, ApplicationDbContext applicationDbContext, IApplicationRoleRepository applicationRoleRepository, IApplicationGroupRepository applicationGroupRepository, IMapper mapper) : base(dbFactory)
         {
             this._applicationRoleRepository = applicationRoleRepository;
+            this._applicationGroupRepository = applicationGroupRepository;
             this._mapper = mapper;
             this._applicationDbContext = applicationDbContext;
         }
 
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
+
+        private readonly IApplicationGroupRepository _applicationGroupRepository;
         private readonly IApplicationRoleRepository _applicationRoleRepository;
 
         public async Task<PageList<UserDto>> GetUsersAsync(UserParams usersParams)
@@ -44,6 +48,8 @@ namespace DashboardMVC.Data
 
                 var roles = _applicationRoleRepository.GetListRoleByUserId(user.Id);
                 user.Roles = roles;
+                var groups = _applicationGroupRepository.GetListGroupByUserId(user.Id);
+                user.Groups = groups;
             }
             return pageList;
         }

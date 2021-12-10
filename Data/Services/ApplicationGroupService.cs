@@ -94,9 +94,9 @@ namespace DashboardMVC.Data.Services
             return _appGroupRepository.GetListUserByGroupId(groupId);
         }
 
-        public IEnumerable<ApplicationGroupDto> GetListGroupByUserId(string userId)
+        public IEnumerable<ApplicationGroupDto> GetListGroupByUserId(int userId)
         {
-            return _mapper.Map<IEnumerable<ApplicationGroup>, IEnumerable<ApplicationGroupDto>>(_appGroupRepository.GetListGroupByUserId(userId));
+            return _appGroupRepository.GetListGroupByUserId(userId);
         }
 
         public IEnumerable<ApplicationRoleGroupDto> GetListGroupWithRoles()

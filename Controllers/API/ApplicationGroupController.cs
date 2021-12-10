@@ -106,7 +106,7 @@ namespace DashboardMVC.Controllers.API
                     foundGroup.Name = applicationGroupDto.Name;
                     foundGroup.Description = applicationGroupDto.Description;
                     _applicationGroupService.Save();
-                    
+
                     var listRoleGroup = new List<ApplicationRoleGroup>();
                     if (applicationGroupDto.Roles != null)
                     {
