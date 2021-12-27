@@ -20,6 +20,8 @@ msgstr "User already exists"
 
 
 
+msgid "server_error_403"
+msgstr "403 Forbidden"
 msgid "server_error_401"
 msgstr "401 Unauthorized"
 msgid "server_error_404"

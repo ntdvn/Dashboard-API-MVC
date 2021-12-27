@@ -29,7 +29,6 @@ namespace DashboardMVC.Controllers.API
         }
 
 
-
         [HttpPost("register")]
         public async Task<ActionResult<BaseDto>> register(RegisterDto registerDto)
         {

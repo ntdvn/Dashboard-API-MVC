@@ -31,8 +31,6 @@ namespace DashboardMVC.Data
             _dbSet = DbContext.Set<T>();
         }
 
-
-
         #region Implementation
         public T Add(T entity)
         {
